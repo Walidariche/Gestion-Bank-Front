@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="card">
+<div class="card-header">Informations Accounts</div>
+    <ng-container *ngIf="customerAccount | async  as customerAccountdetails  " >
+    <form [formGroup]="typeaccountformgroup">
+    <div class="card-body">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" formControlName="TypeAccount"  value="SavingAccount">
+        <label class="form-check-label" >Saving Account </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" formControlName="TypeAccount"  value="CurrentAccount">
+        <label class="form-check-label" >Current Account</label>
+      </div>
+
+
+
+    <table class="table "  >
+
+      <thead >
+
+
+      <th>Customer</th> <th>Rip</th><th>Balance</th><th>Date Creation</th>
+      <th *ngIf="typeaccountformgroup.value.TypeAccount === 'SavingAccount'">  interest Rate</th>
+      <th *ngIf="typeaccountformgroup.value.TypeAccount === 'CurrentAccount'">  Over draft </th>
+      </thead>
+
+
+      <tbody  *ngIf="!(typeaccountformgroup.value.TypeAccount!='SavingAccount')">
+
+        <ng-container *ngFor="let x of customerAccountdetails">
+          <tr *ngIf="x.type === 'SavingAccount'">
+            <td>{{customer.name}}</td>
+            <td>{{x.id}}</td>
+            <td>{{x.balance | number:'1.2-2'}}</td>
+            <td>{{x.createAT | date :'dd-MM-YYYY HH:MM:SS'}}</td>
+
+            <td>{{x.interestRate}}</td>
+
+
+          </tr>
+
+        </ng-container>
+
+      </tbody>
+
+
+
+      <tbody  *ngIf="!(typeaccountformgroup.value.TypeAccount!='CurrentAccount')">
+
+      <ng-container *ngFor="let x of customerAccountdetails">
+        <tr *ngIf="x.type === 'CurrentAccount'">
+          <td>{{customer.name}}</td>
+          <td>{{x.id}}</td>
+          <td>{{x.balance | number:'1.2-2'}}</td>
+          <td>{{x.createAT | date :'dd-MM-YYYY HH:MM:SS'}}</td>
+
+          <td>{{x.overDraft}}</td>
+
+        </tr>
+
+      </ng-container>
+
+      </tbody>
+
+
+
+
+
+   </table>
+
+    </div>
+    </form>
+    </ng-container>
+
+  </div>
+
+
+</div>
